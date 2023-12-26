@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  int level;
+  HomeScreen({super.key, required this.level});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -106,7 +107,23 @@ class _HomeScreenState extends State<HomeScreen> {
 //     );
 //   }
 // }
-  List<Question> questionList = getQuestions();
+  late List<Question> questionList;
+  @override
+  void initState() {
+    super.initState();
+
+    // widget.level kullanılabilir
+    if (widget.level >= 1 && widget.level <= 4) {
+      int start = (widget.level - 1) * 10 + 1;
+      int end = widget.level * 10;
+
+      questionList =
+          getQuestions().skip(start - 1).take(end - start + 1).toList();
+    } else {
+      // Geçerli bir level değeri yoksa, varsayılan işlemi yapabilirsiniz
+    }
+  }
+
   int currentQuestionIndex = 0;
   int score = 0;
   var selectedAnswer;
