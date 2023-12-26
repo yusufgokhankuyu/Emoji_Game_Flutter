@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Generate PDF with Flutter',
+      title: 'Emoji Game',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Generate PDF with Flutter'),
+      home: const MyHomePage(title: 'Emoji Game'),
     );
   }
 }
