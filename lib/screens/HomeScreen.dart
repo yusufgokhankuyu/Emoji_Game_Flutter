@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:emoji_game/models/question_model.dart';
+import 'package:emoji_game/screens/LevelsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -366,9 +367,9 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 48,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blueAccent,
           shape: const StadiumBorder(),
-          primary: Colors.blueAccent,
-          onPrimary: Colors.white,
         ),
         onPressed: () {
           if (isLastQuestion) {
@@ -392,30 +393,97 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _showScoreDialog() {
     bool isPassed = score >= questionList.length * 0.6;
-    String title =
-        isPassed ? "Tebrikler :)" : "Başarısız :( \nŞansını Tekrar Dene";
+    //
+    String title = isPassed ? "Tebrikler 😃" : "Maalesef 🥺";
+    String content = isPassed
+        ? "Başarılı oldunuz! Devam etmek ister misiniz?"
+        : "Başarısız oldunuz. Tekrar denemek ister misiniz?";
 
     return AlertDialog(
-      title: Text(
-        title + "\n" + "${questionList.length} soruda $score soru bildin.",
-        style: GoogleFonts.quicksand(
-            color: isPassed ? Colors.green : Colors.redAccent),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if (isPassed)
+            const Text(
+              "🏆",
+              style: TextStyle(fontSize: 55),
+            )
+          else
+            const Text(
+              "🙃",
+              style: TextStyle(fontSize: 55),
+            ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            title,
+            style: GoogleFonts.quicksand(
+              color: isPassed ? Colors.blue : Colors.redAccent,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
-      content: ElevatedButton(
-        child: Text(
-          "Tekrar oyna",
-          style: GoogleFonts.quicksand(),
+      content: Text(
+        content,
+        style: GoogleFonts.quicksand(fontSize: 18),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+            if (isPassed) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LevelsPage(),
+                  ));
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LevelsPage(),
+                  ));
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            shape: const StadiumBorder(),
+          ),
+          child: Text(isPassed ? "Devam Et" : "Tekrar Dene"),
         ),
-        onPressed: () {
-          Navigator.pop(context);
-          setState(() {
-            _countDownController.restart(duration: 15);
-            currentQuestionIndex = 0;
-            score = 0;
-            selectedAnswer = null;
-          });
-        },
-      ),
+      ],
     );
+    // );
+    // AlertDialog(
+    //   title: Text(
+    //     "$title\n${questionList.length} soruda $score soru bildin.",
+    //     style: GoogleFonts.quicksand(
+    //         color: isPassed ? Colors.green : Colors.redAccent),
+    //   ),
+    //   content: ElevatedButton(
+    //     child: Text(
+    //       "Tekrar oyna",
+    //       style: GoogleFonts.quicksand(),
+    //     ),
+    //     onPressed: () {
+    //       Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => LevelsPage(),
+    //           ));
+    //       // Navigator.pop(context);
+    //       // setState(() {
+    //       //   _countDownController.restart(duration: 15);
+    //       //   currentQuestionIndex = 0;
+    //       //   score = 0;
+    //       //   selectedAnswer = null;
+    //       // });
+    //     },
+    //   ),
+    // );
   }
 }
