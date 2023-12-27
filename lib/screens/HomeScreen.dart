@@ -1,3 +1,4 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:emoji_game/models/question_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,9 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
 //   }
 // }
   late List<Question> questionList;
+
+  late CountDownController _countDownController;
   @override
   void initState() {
     super.initState();
+
+    _countDownController = CountDownController();
 
     // widget.level kullanılabilir
     if (widget.level >= 1 && widget.level <= 4) {
@@ -188,10 +193,75 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "Soru ${currentQuestionIndex + 1}/${questionList.length.toString()}",
-          style: GoogleFonts.quicksand(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Soru ${currentQuestionIndex + 1}/${questionList.length.toString()}",
+                  style: GoogleFonts.quicksand(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Level ${widget.level}",
+                  style: GoogleFonts.quicksand(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              children: [
+                CircularCountDownTimer(
+                  duration: 15, // Saniye cinsinden süre
+                  initialDuration: 0,
+                  controller: _countDownController,
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: MediaQuery.of(context).size.height / 15,
+                  ringColor: Colors.grey[300]!,
+                  ringGradient: null,
+                  fillColor: Colors.blueAccent,
+                  fillGradient: null,
+                  backgroundColor: Colors.transparent,
+                  backgroundGradient: null,
+                  strokeWidth: 5.0,
+                  strokeCap: StrokeCap.round,
+                  textStyle: GoogleFonts.quicksand(
+                      fontSize: 22.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textFormat: CountdownTextFormat.S,
+                  isReverse: true,
+                  isReverseAnimation: false,
+                  isTimerTextShown: true,
+                  autoStart: true,
+                  onStart: () {
+                    // Timer başladığında yapılacak işlemler (opsiyonel)
+                  },
+                  onComplete: () {
+                    // Zaman bittiğinde yapılacak işlemler (opsiyonel)
+                    _handleTimeUp();
+                  },
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Kalan Süre",
+                  style: GoogleFonts.quicksand(color: Colors.white),
+                ),
+              ],
+            ),
+          ],
         ),
         const SizedBox(
           height: 20,
@@ -210,9 +280,37 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 32,
             ),
           ),
-        )
+        ),
       ],
     );
+  }
+
+  _handleTimeUp() {
+    // Zaman bittiğinde yapılacak işlemler
+    print("Time's up!");
+
+    // İsterseniz soruyu otomatik olarak yanlış kabul edebilir veya farklı bir şey yapabilirsiniz.
+    // Örneğin: answerQuestion("TIME_UP");
+
+    // Otomatik olarak bir sonraki soruya geç
+    _moveToNextQuestion();
+  }
+
+  _moveToNextQuestion() {
+    if (_countDownController != null) {
+      // Timer'ı sıfırla ve bir sonraki soruya geç
+      _countDownController.restart(duration: 15);
+    }
+
+    setState(() {
+      selectedAnswer = null;
+      if (currentQuestionIndex < questionList.length - 1) {
+        currentQuestionIndex++;
+      } else {
+        // Eğer sorular bitmişse, quiz tamamlanmıştır.
+        _showScoreDialog();
+      }
+    });
   }
 
   _answerList() {
@@ -267,8 +365,6 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 0.5,
       height: 48,
       child: ElevatedButton(
-        child: Text(isLastQuestion ? "Kaydet" : "İleri",
-            style: GoogleFonts.quicksand()),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           primary: Colors.blueAccent,
@@ -277,15 +373,19 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           if (isLastQuestion) {
             //display score
+            _countDownController.pause();
             showDialog(context: context, builder: (_) => _showScoreDialog());
           } else {
             //next question
             setState(() {
               selectedAnswer = null;
               currentQuestionIndex++;
+              _countDownController.restart(duration: 15);
             });
           }
         },
+        child: Text(isLastQuestion ? "Kaydet" : "İleri",
+            style: GoogleFonts.quicksand()),
       ),
     );
   }
@@ -309,6 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.pop(context);
           setState(() {
+            _countDownController.restart(duration: 15);
             currentQuestionIndex = 0;
             score = 0;
             selectedAnswer = null;
