@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 15,
           ),
           Text(
-            'Emojilerle Şarkılar',
+            'Emojilerle Şarkıyı Tahmin Et',
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(
                 fontSize: 25,

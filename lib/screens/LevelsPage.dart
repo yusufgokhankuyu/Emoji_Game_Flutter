@@ -49,7 +49,7 @@ class LevelsPage extends StatelessWidget {
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   height: MediaQuery.sizeOf(context).height * 0.2,
                   child: Card(
-                    color: Color.fromARGB(255, 50, 192, 232),
+                    color: const Color.fromARGB(255, 50, 192, 232),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
