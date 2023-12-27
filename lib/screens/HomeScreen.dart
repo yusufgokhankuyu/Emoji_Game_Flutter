@@ -267,7 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 0.5,
       height: 48,
       child: ElevatedButton(
-        child: Text(isLastQuestion ? "Kaydet" : "İleri"),
+        child: Text(isLastQuestion ? "Kaydet" : "İleri",
+            style: GoogleFonts.quicksand()),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           primary: Colors.blueAccent,
@@ -297,10 +298,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return AlertDialog(
       title: Text(
         title + "\n" + "${questionList.length} soruda $score soru bildin.",
-        style: TextStyle(color: isPassed ? Colors.green : Colors.redAccent),
+        style: GoogleFonts.quicksand(
+            color: isPassed ? Colors.green : Colors.redAccent),
       ),
       content: ElevatedButton(
-        child: const Text("Tekrar oyna"),
+        child: Text(
+          "Tekrar oyna",
+          style: GoogleFonts.quicksand(),
+        ),
         onPressed: () {
           Navigator.pop(context);
           setState(() {
