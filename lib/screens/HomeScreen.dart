@@ -394,7 +394,9 @@ class _HomeScreenState extends State<HomeScreen> {
   _showScoreDialog() {
     bool isPassed = score >= questionList.length * 0.6;
     //
-    String title = isPassed ? "Tebrikler 😃" : "Maalesef 🥺";
+    String title = isPassed
+        ? "Tebrikler Başarılı oldunuz😃"
+        : "Maalesef Başarısız Oldunuz🥺";
     String content = isPassed
         ? "Başarılı oldunuz! Devam etmek ister misiniz?"
         : "Başarısız oldunuz. Tekrar denemek ister misiniz?";

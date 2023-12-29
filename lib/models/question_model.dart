@@ -17,7 +17,6 @@ class Question {
 // ];
 List<Question> getQuestions() {
   List<Question> list = [];
-  //ADD questions and answer here
 
   list.add(Question(
       emoji: "🔪🚶‍♂️❓\n📞💡💫👩‍❤️‍👨",
@@ -125,7 +124,6 @@ List<Question> getQuestions() {
         "Yollar",
         "Araba",
         "Kış Masalı",
-        "Aşkın Beni Baştan Yazar"
       ],
       correctAnswer: "Geceyi Sana Yazdım",
     ),
@@ -139,7 +137,6 @@ List<Question> getQuestions() {
         "Seni Sevdim İçin",
         "Gel Gör Beni Aşk Neyledi",
         "Gülü Susuz Seni Aşksız Bırakmam",
-        "Aşkın İçinden Geçerek"
       ],
       correctAnswer: "Sorma",
     ),
@@ -153,7 +150,6 @@ List<Question> getQuestions() {
         "Alev Alev",
         "Yanımda Kal",
         "Yüzyılın Aşkı",
-        "Rüzgar"
       ],
       correctAnswer: "Sakin Ol",
     ),
