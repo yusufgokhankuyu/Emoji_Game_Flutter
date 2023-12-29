@@ -1,7 +1,6 @@
 # emoji_game
 
-A new Flutter project.
-
+Emoji Game is the funny game. Questions include some emojies. And users predict the songs from emojies. The application language is Turkish.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
