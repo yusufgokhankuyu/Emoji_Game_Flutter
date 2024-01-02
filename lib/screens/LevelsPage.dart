@@ -27,7 +27,7 @@ class LevelsPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Seviye Seç",
+                "Seviye Seçiniz",
                 style: GoogleFonts.quicksand(
                     color: Colors.white,
                     fontSize: 24,
@@ -58,7 +58,7 @@ class LevelsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 35),
                         ),
                         Text(
-                          "Level 1",
+                          "Seviye 1",
                           style: GoogleFonts.quicksand(
                               fontSize: 32,
                               color: Colors.white,
@@ -96,7 +96,7 @@ class LevelsPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Level 2",
+                          "Seviye 2",
                           style: GoogleFonts.quicksand(
                               fontSize: 32,
                               color: Colors.white,
@@ -134,7 +134,7 @@ class LevelsPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Level 3",
+                          "Seviye 3",
                           style: GoogleFonts.quicksand(
                               fontSize: 32,
                               color: Colors.white,
@@ -172,7 +172,7 @@ class LevelsPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Level 4",
+                          "Seviye 4",
                           style: GoogleFonts.quicksand(
                               fontSize: 32,
                               color: Colors.white,
